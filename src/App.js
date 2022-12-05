@@ -26,9 +26,9 @@ export const theme = createTheme({
 });
 
 export const Webcolors = {
-  background: "#FFFFFF",
-  darkgreen: "#646464",
-  lightgreen: "#7F977B",
+  background: "#FFFFFF", //背景白
+  darkgreen: "#646464", //文字深綠
+  lightgreen: "#7F977B", //淺綠
 };
 
 function App() {
