@@ -16,9 +16,8 @@ export const theme = createTheme({
     // 綠色
     secondary: {
       main: '#646464',
-      light: '#7F977B'
     },
-    test: {
+    inherit: {
       main: '#7F977B',
     },
 
