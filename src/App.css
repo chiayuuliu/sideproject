@@ -1,8 +1,17 @@
 @import "./Style/Home.css";
-
+:root {
+  --grey: #646464;
+  --background: #ffffff;
+  --maingreen: #7f977b;
+  --lightyellow: #e0da48;
+  --pink: #ff725e;
+}
 * {
   padding: 0;
   margin: 0;
-  border: 1px solid rgb(189, 189, 189);
+  /* border: 1px solid rgb(189, 189, 189); */
   box-sizing: border-box;
+}
+.locationIcon {
+  color: var(--lightyellow);
 }

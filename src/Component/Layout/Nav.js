@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {  ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../App'
 import { AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -56,7 +56,7 @@ function DrawerAppBar(props) {
             <Typography
               variant="h6"
               component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, mt: 1 }}
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
             >
               <img src="/Images/Logo-desktop.svg" alt="Logo" />
             </Typography>

@@ -1,12 +1,12 @@
 import React from 'react'
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '../../../App'
+import { theme } from '../../App'
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import { AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, TextField, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { Webcolors } from '../../../App';
-import ButtonTest from './Button'
+import { Webcolors } from '../../App';
+// import ButtonTest from './Button'
 
 const SubmitButton = styled(Button)(({ theme }) => ({
   color: '#FFFFFF',
@@ -36,6 +36,7 @@ const SearchInput = () => {
             id="demo-simple-select"
             label="探索"
           >
+            {/* TODO: 會跳錯誤，待處理 */}
             <MenuItem value={10} selected>探索景點</MenuItem>
             <MenuItem value={20}>節慶活動</MenuItem>
             <MenuItem value={30}>品嚐美食</MenuItem>
