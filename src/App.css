@@ -1,4 +1,6 @@
 @import "./Style/Home.css";
+@import "./Style/ScientPage.css";
+
 :root {
   --grey: #646464;
   --background: #ffffff;

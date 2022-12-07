@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import { Route, Routes } from "react-router-dom";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { createTheme } from '@mui/material/styles';
 import Home from './Page/Home';
 import Layout from './Component/Layout'
+import { ScientPage } from './Page/ScientPage';
 
 // 顏色設定
 export const theme = createTheme({
@@ -17,7 +16,8 @@ export const theme = createTheme({
     secondary: {
       main: '#646464',
     },
-    inherit: {
+    // 淺綠
+    ligntGreen: {
       main: '#7F977B',
     },
 
@@ -35,6 +35,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/scientSpot" element={<ScientPage />} />
       </Route>
     </Routes>
   );

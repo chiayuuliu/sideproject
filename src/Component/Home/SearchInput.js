@@ -34,9 +34,9 @@ const SearchInput = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="探索"
+            label="全縣市"
           >
-            {/* TODO: 會跳錯誤，待處理 */}
+            {/* 要用縣市名 */}
             <MenuItem value={10} selected>探索景點</MenuItem>
             <MenuItem value={20}>節慶活動</MenuItem>
             <MenuItem value={30}>品嚐美食</MenuItem>

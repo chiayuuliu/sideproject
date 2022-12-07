@@ -1,14 +1,32 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate, NavLink } from 'react-router-dom';
+
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../App'
 import { AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button, } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const drawerWidth = 200;
-const navItems = ['探索景點', '節慶活動', '品嚐美食'];
+// const navItems = ['探索景點', '節慶活動', '品嚐美食'];
+const navItems = [
+  {
+    name: '探索景點',
+    link: '/scientSpot',
+  },
+  {
+    name: '節慶活動',
+    link: '',
+  },
+  {
+    name: '品嚐美食',
+    link: "",
+  }
+];
+
 
 function DrawerAppBar(props) {
+  const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -18,21 +36,23 @@ function DrawerAppBar(props) {
 
   // 手機版nav
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        台灣觀光景點
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+        <Typography variant="h6" sx={{ my: 2, color: "secondary.main" }}>
+          台灣觀光景點
+        </Typography>
+        <Divider />
+        <List>
+          {navItems.map((item) => (
+            <ListItem key={item.name} disablePadding>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item.name} color='ligntGreen' />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </ThemeProvider>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -57,6 +77,9 @@ function DrawerAppBar(props) {
               variant="h6"
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+              onClick={() => {
+                navigate('/');
+              }}
             >
               <img src="/Images/Logo-desktop.svg" alt="Logo" />
             </Typography>
@@ -64,8 +87,11 @@ function DrawerAppBar(props) {
               {navItems.map((item) => (
                 <Button
                   color="secondary"
-                  key={item} mx={2}>
-                  {item}
+                  key={item.name} mx={2}
+                  onClick={() => {
+                    navigate(item.link);
+                  }}>
+                  {item.name}
                 </Button>
               ))}
             </Box>
