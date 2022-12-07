@@ -8,19 +8,20 @@ import ActiveCard from '../Component/Home/ActiveCard';
 import HotCard from '../Component/Home/HotCard';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Spinner from '../Component/Spinner'
+import { getAuthorizationHeader } from "../api/headerFunc";
+
 
 const Home = () => {
-  const [loading, setLoading] = useState(false)
+
+  const [loading, setLoading] = useState(true)
   const [bannerImg, setBannerImg] = useState([])
   const [foodData, setFoodData] = useState([])
   const [scenicData, setScenicData] = useState([])
   const [activityData, setActivityData] = useState([])
 
+  // v2/Tourism/ScenicSpot?%24select=ScenicSpotName%2C%20Address%2C%20Picture&%24top=5&%24skip=10&%24format=JSON'
   // Banner Img
-  const getBannerImg_URL = `/v2/Tourism/ScenicSpot?$select=Picture&$top=5&format=JSON`
-  // const getBannerImg_URL = `/v2/Tourism/ScenicSpot?%24select=Picture&%24top=5&%24skip=10&format=JSON`
-
-  // https://tdx.transportdata.tw/api/basic/v2/Tourism/ScenicSpot?%24select=Picture&%24top=5&%24skip=10&%24format=JSON
+  const getBannerImg_URL = `/v2/Tourism/ScenicSpot?$select=ScenicSpotName, Address, Picture&$top=5&$skip=10&$format=JSON`
   // 美食URL
   const getFoodData_URL = `/v2/Tourism/Restaurant?$select=Address, Picture, RestaurantName&$top=4&$skip=4&$format=JSON`
   // 景點URL
@@ -29,7 +30,6 @@ const Home = () => {
   const getActivityData_URL = `/v2/Tourism/Activity?$select=Address, StartTime,EndTime, ActivityName, Picture, Location&$top=4&$skip=6&$format=JSON`
 
   useEffect(() => {
-    setLoading(true)
     getBannerImgs()
     getFoodData()
     getScenic()
@@ -40,8 +40,12 @@ const Home = () => {
   // 拿banner 圖片
   const getBannerImgs = async () => {
     try {
-      const res = await api.get(getBannerImg_URL);
-      // console.log('img', res.data)
+      const res = await api.get(getBannerImg_URL, {
+        headers: getAuthorizationHeader(),
+      });
+      if (res.status === 200) {
+        console.log('img', res.data)
+      }
       setBannerImg(res.data)
     } catch (err) {
       console.log(err)
@@ -53,9 +57,12 @@ const Home = () => {
       // setAuthLoading(false)
     }
   };
+
   const getFoodData = async () => {
     try {
-      const res = await api.get(getFoodData_URL);
+      const res = await api.get(getFoodData_URL, {
+        headers: getAuthorizationHeader(),
+      });
       // console.log('food', res.data)
       setFoodData(res.data)
     } catch (err) {
@@ -71,8 +78,9 @@ const Home = () => {
   // 拿熱門景點
   const getScenic = async () => {
     try {
-      const res = await api.get(getScenicData_URL);
-      // console.log('senic', res.data)
+      const res = await api.get(getScenicData_URL, {
+        headers: getAuthorizationHeader(),
+      });
       setScenicData(res.data)
     } catch (err) {
       console.log(err)
@@ -87,8 +95,9 @@ const Home = () => {
 
   const getActivity = async () => {
     try {
-      const res = await api.get(getActivityData_URL);
-      console.log('activity', res.data)
+      const res = await api.get(getActivityData_URL, {
+        headers: getAuthorizationHeader(),
+      });
       setActivityData(res.data)
     } catch (err) {
       console.log(err)
@@ -110,7 +119,6 @@ const Home = () => {
         <Container fixed>
           {/* 搜尋欄位 */}
           <Stack
-            fullWidth
             margin='auto'
             width='85%'
             direction="row"
@@ -140,6 +148,7 @@ const Home = () => {
               {activityData.map((v) => {
                 return (
                   <ActiveCard
+                    key={v.ActivityName}
                     img={v.Picture.PictureUrl1}
                     name={v.ActivityName}
                     address={v.Location}
@@ -163,6 +172,7 @@ const Home = () => {
               {scenicData.map((v) => {
                 return (
                   <HotCard
+                    key={v.Address}
                     img={v.Picture.PictureUrl1}
                     name={v.ScenicSpotName}
                     address={v.Address}
@@ -186,6 +196,7 @@ const Home = () => {
               {foodData.map((v) => {
                 return (
                   <HotCard
+                    key={v.Address}
                     img={v.Picture.PictureUrl1}
                     name={v.RestaurantName}
                     address={v.Address}

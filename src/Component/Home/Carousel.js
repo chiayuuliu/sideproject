@@ -26,7 +26,11 @@ const Carousel = ({ bannerImg }) => {
           return (
             <SwiperSlide>
               <img src={v.Picture.PictureUrl1
-              } alt="這是綠島露營區的階梯" />
+              } alt={v.Picture.PictureUrl1.PictureDescription1} />
+              <p className="name">
+                <span>{v.Address.substr(0, 3)}</span>
+                <span>{v.ScenicSpotName}</span>
+              </p>
             </SwiperSlide>
           )
         })}
