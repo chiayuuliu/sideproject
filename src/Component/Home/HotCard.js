@@ -1,9 +1,19 @@
 import React from 'react'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useNavigate } from 'react-router-dom';
 
-const HotCard = ({ img, name, address }) => {
+
+const HotCard = ({ img, name, address, type, ID }) => {
+  const navigate = useNavigate();
   return (
-    <div className="hotCard">
+    <div className="hotCard"
+      onClick={() => {
+        if (type === 'ScenicSpot') {
+          navigate(`/ScenicSpot/${ID}`);
+        } else {
+          navigate(`/Restaurant/${ID}`);
+        }
+      }}>
       <div className="imgBox mb-1">
         <img src={img} alt="" />
       </div>

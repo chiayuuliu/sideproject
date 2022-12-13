@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { styled } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../App'
+import api from '../api/api';
 import { scientCate } from '../Data/CateData'
+import { getAuthorizationHeader } from "../api/headerFunc";
+
 import SearchIcon from '@mui/icons-material/Search';
 import { Container, Stack, Box, Button, TextField, FormControl, Breadcrumbs, Select, MenuItem, Link, Typography } from '@mui/material';
 
@@ -19,13 +22,59 @@ const SubmitButton = styled(Button)(({ theme }) => ({
     backgroundColor: '#7F977B',
   },
 }));
+// https://ptx.transportdata.tw/MOTC/v2/Tourism/Restaurant/NewTaipei?$top=32&$skip=32&$select=RestaurantID%2CRestaurantName%2CPicture%2CZipCode%2CClass&$filter=Picture/PictureUrl1%20ne%20null&$format=JSON
 
 
 // 探索景點細節頁
-export const ScientPage = () => {
-  console.log('data', scientCate)
+export const ScenicSpotPage = () => {
+  // 成功拿取新北12筆資料
+  const getData = `/v2/Tourism/Restaurant/NewTaipei?$top=12&$skip=12&$select=RestaurantID,RestaurantName,Picture,ZipCode,Class&$filter=Picture/PictureUrl1 ne null&$format=JSON`
+  const AuthURL = `https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token`
+
+  useEffect(() => {
+    getDataTest()
+    // getAuth()
+  }, [])
+
+  const getDataTest = async () => {
+    try {
+      const res = await api.get(getData, {
+        headers: getAuthorizationHeader(),
+      });
+      if (res.status === 200) {
+        console.log('data', res.data)
+      }
+    } catch (err) {
+      console.log(err)
+      const errorCode = err.response.status;
+      const errMsg = err.response.data.data.error_code;
+      // ErrorMsg(errorCode, errMsg);
+    }
+    finally {
+      // setAuthLoading(false)
+    }
+  };
+
+  // const getAuth = async (e) => {
+  //   try {
+  //     const res = await api.post(AuthURL, JSON.stringify({
+  //       grant_type: "client_credentials",
+  //       client_id: 'chiayuu.liu-1bb97440-0b2b-4250',
+  //       client_secret: 'cddc5170-a6b1-4c45-9777-2ba0ad321f88',
+  //     }));
+  //     if (res.data.status) {
+  //       console.log(res.data)
+  //     }
+  //   } catch (err) {
+  //     console.log(err)
+  //     const errorCode = err.response.status;
+  //     const errMsg = err.response.data.data.error_code;
+  //     // ErrorMsg(errorCode, errMsg)
+  //   } 
+  // }
+
   return (
-    <div className='scientPage'>
+    <div className='catePage'>
       <Container fixed className='100vh'>
         <div role="presentation" className='breadcrumbWrap'>
           <ThemeProvider theme={theme}>

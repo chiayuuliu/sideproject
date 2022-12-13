@@ -9,25 +9,31 @@ import HotCard from '../Component/Home/HotCard';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Spinner from '../Component/Spinner'
 import { getAuthorizationHeader } from "../api/headerFunc";
+import { useNavigate, NavLink } from 'react-router-dom';
+
 
 
 const Home = () => {
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
   const [bannerImg, setBannerImg] = useState([])
   const [foodData, setFoodData] = useState([])
   const [scenicData, setScenicData] = useState([])
   const [activityData, setActivityData] = useState([])
+  const numA = Math.floor(Math.random() * 10);
+  const numB = Math.floor(Math.random() * 10);
 
-  // v2/Tourism/ScenicSpot?%24select=ScenicSpotName%2C%20Address%2C%20Picture&%24top=5&%24skip=10&%24format=JSON'
+  console.log(numA * numB);
+
+  // TODO:random移除前面幾筆
   // Banner Img
   const getBannerImg_URL = `/v2/Tourism/ScenicSpot?$select=ScenicSpotName, Address, Picture&$top=5&$skip=10&$format=JSON`
   // 美食URL
-  const getFoodData_URL = `/v2/Tourism/Restaurant?$select=Address, Picture, RestaurantName&$top=4&$skip=4&$format=JSON`
+  const getFoodData_URL = `/v2/Tourism/Restaurant?$select=Address, Picture, RestaurantName,RestaurantID&$top=4&$skip=${numA * numB}&$format=JSON`
   // 景點URL
-  const getScenicData_URL = `/v2/Tourism/ScenicSpot?$select=ScenicSpotName, Address,Picture&$top=4&$format=JSON'`
+  const getScenicData_URL = `/v2/Tourism/ScenicSpot?$select=ScenicSpotName,ScenicSpotID, Address,Picture&$top=4&skip=${numA * numB}&$format=JSON`
   // 活動URL
-  const getActivityData_URL = `/v2/Tourism/Activity?$select=Address, StartTime,EndTime, ActivityName, Picture, Location&$top=4&$skip=6&$format=JSON`
+  const getActivityData_URL = `/v2/Tourism/Activity?$select=Address, StartTime,EndTime, ActivityName, Picture, Location&$top=4&$skip=${numA * numB}&$format=JSON`
 
   useEffect(() => {
     getBannerImgs()
@@ -35,6 +41,8 @@ const Home = () => {
     getScenic()
     getActivity()
   }, [])
+
+  console.log('random', Math.floor(Math.random() * Math.floor(Math.random() * 100)))
 
 
   // 拿banner 圖片
@@ -58,12 +66,13 @@ const Home = () => {
     }
   };
 
+  // 拿餐廳資料
   const getFoodData = async () => {
     try {
       const res = await api.get(getFoodData_URL, {
         headers: getAuthorizationHeader(),
       });
-      // console.log('food', res.data)
+      console.log('food', res.data)
       setFoodData(res.data)
     } catch (err) {
       console.log(err)
@@ -82,6 +91,8 @@ const Home = () => {
         headers: getAuthorizationHeader(),
       });
       setScenicData(res.data)
+      console.log(res.data)
+
     } catch (err) {
       console.log(err)
       const errorCode = err.response.status;
@@ -172,6 +183,8 @@ const Home = () => {
               {scenicData.map((v) => {
                 return (
                   <HotCard
+                    type='ScenicSpot'
+                    ID={v.ScenicSpotID}
                     key={v.Address}
                     img={v.Picture.PictureUrl1}
                     name={v.ScenicSpotName}
@@ -196,6 +209,8 @@ const Home = () => {
               {foodData.map((v) => {
                 return (
                   <HotCard
+                    type='restaurant'
+                    ID={v.RestaurantID}
                     key={v.Address}
                     img={v.Picture.PictureUrl1}
                     name={v.RestaurantName}

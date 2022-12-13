@@ -3,7 +3,9 @@ import { Route, Routes } from "react-router-dom";
 import { createTheme } from '@mui/material/styles';
 import Home from './Page/Home';
 import Layout from './Component/Layout'
-import { ScientPage } from './Page/ScientPage';
+import { ScenicSpotPage } from './Page/ScenicSpotPage';
+import { ScenicSpotDetailPage } from './Page/ScenicSpotDetailPage';
+import { RestaurantDetailPage } from './Page/RestaurantDetailPage';
 
 // 顏色設定
 export const theme = createTheme({
@@ -35,7 +37,9 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/scientSpot" element={<ScientPage />} />
+        <Route path="/ScenicSpot" element={<ScenicSpotPage />} />
+        <Route path="/ScenicSpot/:ScenicSpotID" element={<ScenicSpotDetailPage />} />
+        <Route path="/Restaurant/:RestaurantID" element={<RestaurantDetailPage />} />
       </Route>
     </Routes>
   );
