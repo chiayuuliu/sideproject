@@ -8,11 +8,83 @@
   </head>
   <body>
     <script>
-      const numA = Math.floor(Math.random() * 10);
-      const numB = Math.floor(Math.random() * 10);
+      //長度為n的陣列，找出一個出現n/2次以上的主要元素，假設陣列不會是空值，而且總是會有主要元素存在陣列中。
+      // 用一個map來記錄毎一個元素出現幾次，只要有一個元素出現n/2次，這個元素就是主要元素。
 
-      console.log(numA * numB);
-      // console.log(Math.floor(Math.random()* 10)));
+      // const nums = [3, 2, 3];
+
+      // var majorityElement = function (nums) {
+      //   // console.log(nums);
+      //   var map = {};
+      //   if (nums.length === 1) {
+      //     return nums[0];
+      //   }
+
+      //   for (var i = 0; i < nums.length; i++) {
+      //     // 沒出現過的放入map 當key並value標示為1(次)
+      //     if (!map[nums[i]]) {
+      //       map[nums[i]] = 1;
+      //     } else {
+      //       // 出現過的元素，value +1
+      //       map[nums[i]]++;
+      //       if (map[nums[i]] >= nums.length / 2) {
+      //         return nums[i];
+      //       }
+      //     }
+      //   }
+      // };
+      // majorityElement(nums);
+
+      // var majorityElement = function (nums) {
+      //   const obj = {};
+      //   for (let i = 0; i < nums.length; i++) {
+      //     if (!obj[nums[i]]) {
+      //       obj[nums[i]] = 1;
+      //     } else {
+      //       obj[nums[i]]++;
+      //     }
+      //     if (obj[nums[i]] > nums.length / 2) {
+      //       return nums[i];
+      //     }
+      //   }
+      // };
+      // majorityElement(nums);
+
+      // Input: (nums1 = [1, 2, 2, 1]), (nums2 = [2, 2]);
+      // Output: [2, 2];
+
+      const nums1 = [4, 9, 5],
+        nums2 = [9, 4, 9, 8, 4];
+
+      var intersect = function (nums1, nums2) {
+        // 在這裡用var or const 的差異？
+        const newAr = [];
+        var long;
+        var short;
+        if (nums1.length > nums2.length) {
+          long = nums1;
+          short = nums2;
+        } else {
+          long = nums2;
+          short = nums1;
+        }
+        for (let i = 0; i < short.length; i++) {
+          if (long.indexOf(short[i]) >= 0) {
+            newAr.push(short[i]);
+            long[long.indexOf(short[i])] = null;
+            console.log(long);
+            // delete long[long.indexOf(short[i])];
+          }
+        }
+        return newAr;
+      };
+
+      const nums = [3, 1, 2, 3, 2];
+      val = 3;
+
+      var removeElement = function (nums, val) {
+        // const newAr = 
+      };
     </script>
   </body>
 </html>

@@ -6,6 +6,7 @@ import Layout from './Component/Layout'
 import { ScenicSpotPage } from './Page/ScenicSpotPage';
 import { ScenicSpotDetailPage } from './Page/ScenicSpotDetailPage';
 import { RestaurantDetailPage } from './Page/RestaurantDetailPage';
+import { TestPage } from './Page/TestPage';
 
 // 顏色設定
 export const theme = createTheme({
@@ -40,6 +41,7 @@ function App() {
         <Route path="/ScenicSpot" element={<ScenicSpotPage />} />
         <Route path="/ScenicSpot/:ScenicSpotID" element={<ScenicSpotDetailPage />} />
         <Route path="/Restaurant/:RestaurantID" element={<RestaurantDetailPage />} />
+        <Route path="/test" element={<TestPage />} />
       </Route>
     </Routes>
   );

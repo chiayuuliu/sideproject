@@ -23,43 +23,45 @@ const Home = () => {
   const numA = Math.floor(Math.random() * 10);
   const numB = Math.floor(Math.random() * 10);
 
-  console.log(numA * numB);
+  // console.log(numA * numB);
 
   // TODO:random移除前面幾筆
   // Banner Img
-  const getBannerImg_URL = `/v2/Tourism/ScenicSpot?$select=ScenicSpotName, Address, Picture&$top=5&$skip=10&$format=JSON`
-  // 美食URL
-  const getFoodData_URL = `/v2/Tourism/Restaurant?$select=Address, Picture, RestaurantName,RestaurantID&$top=4&$skip=${numA * numB}&$format=JSON`
-  // 景點URL
-  const getScenicData_URL = `/v2/Tourism/ScenicSpot?$select=ScenicSpotName,ScenicSpotID, Address,Picture&$top=4&skip=${numA * numB}&$format=JSON`
+  const getBannerImg_URL = `v2/Tourism/ScenicSpot?%24top=5&%24skip=10&%24format=JSON`
   // 活動URL
-  const getActivityData_URL = `/v2/Tourism/Activity?$select=Address, StartTime,EndTime, ActivityName, Picture, Location&$top=4&$skip=${numA * numB}&$format=JSON`
+  const getActivityData_URL = `/v2/Tourism/Activity?%24top=4&%24skip=10&%24format=JSON`
+
+  // 美食URL
+  const getFoodData_URL = `/v2/Tourism/Restaurant?$top=4&$skip=${numA * numB}&$format=JSON`
+  // 景點URL
+  const getScenicData_URL = `/v2/Tourism/ScenicSpot?$select=ScenicSpotName,ScenicSpotID, Address,Picture&$top=4&skip=10&$format=JSON`
 
   useEffect(() => {
-    getBannerImgs()
-    getFoodData()
-    getScenic()
-    getActivity()
+    // getBannerImgs()
+    // getFoodData()
+    // getScenic()
+    // getActivity()
   }, [])
 
   console.log('random', Math.floor(Math.random() * Math.floor(Math.random() * 100)))
 
 
-  // 拿banner 圖片
+  // 拿banner 圖片(可以跟拿景點資訊同一個API response)
   const getBannerImgs = async () => {
     try {
       const res = await api.get(getBannerImg_URL, {
         headers: getAuthorizationHeader(),
       });
       if (res.status === 200) {
-        console.log('img', res.data)
+        console.log('banner', res.data)
+        setBannerImg(res.data)
+        return
       }
-      setBannerImg(res.data)
     } catch (err) {
       console.log(err)
       const errorCode = err.response.status;
-      const errMsg = err.response.data.data.error_code;
-      // ErrorMsg(errorCode, errMsg);
+      const errMsg = err.response.status.statusText;
+      console.log('拿圖片', errorCode, errMsg)
     }
     finally {
       // setAuthLoading(false)
@@ -72,13 +74,16 @@ const Home = () => {
       const res = await api.get(getFoodData_URL, {
         headers: getAuthorizationHeader(),
       });
-      console.log('food', res.data)
-      setFoodData(res.data)
+      if (res.status === 200) {
+        console.log('餐廳', res.data)
+        setFoodData(res.data)
+        return
+      }
     } catch (err) {
       console.log(err)
-      // const errorCode = err.response.status;
-      // const errMsg = err.response.data.data.error_code;
-      // ErrorMsg(errorCode, errMsg);
+      const errorCode = err.response.status;
+      const errMsg = err.response.status.statusText;
+      console.log('拿餐廳', errorCode, errMsg)
     }
     finally {
       // setAuthLoading(false)
@@ -87,34 +92,40 @@ const Home = () => {
   // 拿熱門景點
   const getScenic = async () => {
     try {
-      const res = await api.get(getScenicData_URL, {
+      const res = await api.get(`/v2/Tourism/ScenicSpot?$top=4&skip=10&$format=JSON`, {
         headers: getAuthorizationHeader(),
       });
-      setScenicData(res.data)
-      console.log(res.data)
-
+      if (res.status === 200) {
+        console.log('景點', res.data)
+        setScenicData(res.data)
+        return
+      }
     } catch (err) {
       console.log(err)
       const errorCode = err.response.status;
-      const errMsg = err.response.data.data.error_code;
-      // ErrorMsg(errorCode, errMsg);
+      const errMsg = err.response.status.statusText;
+      console.log('拿景點', errorCode, errMsg)
     }
     finally {
       // setAuthLoading(false)
     }
   };
-
+  // 拿活動資料
   const getActivity = async () => {
     try {
       const res = await api.get(getActivityData_URL, {
         headers: getAuthorizationHeader(),
       });
-      setActivityData(res.data)
+      if (res.status === 200) {
+        console.log('activity', res.data)
+        setActivityData(res.data)
+        return
+      }
     } catch (err) {
       console.log(err)
       const errorCode = err.response.status;
-      const errMsg = err.response.data.data.error_code;
-      // ErrorMsg(errorCode, errMsg);
+      const errMsg = err.response.status.statusText;
+      console.log('拿活動', errorCode, errMsg)
     }
     finally {
       setLoading(false)

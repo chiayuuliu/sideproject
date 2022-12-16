@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const scientCate = [
   {
     name: "自然風景區",

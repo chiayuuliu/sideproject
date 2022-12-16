@@ -21,7 +21,6 @@ export const Banner = ({ imgArr }) => {
       <SwiperSlide>
         <img src={imgArr.PictureUrl1} alt="" />
       </SwiperSlide>
-    
     </Swiper>
   )
 }
